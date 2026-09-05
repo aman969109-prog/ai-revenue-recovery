@@ -1,0 +1,347 @@
+/* ==========================================
+   GLOBAL RESET
+========================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ==========================================
+   BODY
+========================================== */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f8;
+    color: #111827;
+    padding: 30px;
+}
+
+
+/* ==========================================
+   MAIN CONTAINER
+========================================== */
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+header {
+    background: #111827;
+    color: white;
+    padding: 32px;
+    border-radius: 16px;
+    margin-bottom: 22px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #cbd5e1;
+    font-size: 16px;
+}
+
+
+/* ==========================================
+   SECTIONS
+========================================== */
+
+section {
+    background: white;
+    padding: 25px;
+    margin-bottom: 22px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+}
+
+section h2 {
+    margin-bottom: 20px;
+    font-size: 21px;
+}
+
+
+/* ==========================================
+   SEARCH
+========================================== */
+
+.search-box {
+    display: flex;
+    gap: 12px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-box input:focus {
+    border-color: #111827;
+}
+
+.search-box button {
+    padding: 14px 22px;
+    border: none;
+    border-radius: 9px;
+    background: #111827;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.search-box button:hover {
+    background: #374151;
+}
+
+
+/* ==========================================
+   METRICS
+========================================== */
+
+.metrics-section {
+    margin-bottom: 25px;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.metric-card {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 22px;
+    border: 1px solid #e5e7eb;
+}
+
+.metric-title {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+.metric-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+}
+
+
+/* ==========================================
+   INFORMATION GRID
+========================================== */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.grid div {
+    background: #f8fafc;
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+
+/* ==========================================
+   LABELS
+========================================== */
+
+span {
+    display: block;
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+strong {
+    display: block;
+    font-size: 17px;
+}
+
+
+/* ==========================================
+   DECISION SECTION
+========================================== */
+
+.decision p {
+    padding: 14px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.decision p:last-child {
+    border-bottom: none;
+}
+
+.decision p strong {
+    display: inline-block;
+    min-width: 190px;
+}
+
+
+/* ==========================================
+   RECOVERY MESSAGE
+========================================== */
+
+#message {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 10px;
+    line-height: 1.7;
+    color: #374151;
+}
+
+
+/* ==========================================
+   RECOVERY BUTTON
+========================================== */
+
+.recovery-action {
+    text-align: center;
+}
+
+#run-button {
+    width: 100%;
+    padding: 17px;
+    border: none;
+    border-radius: 10px;
+    background: #111827;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#run-button:hover {
+    background: #374151;
+}
+
+#run-button:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+
+/* ==========================================
+   RESULT MESSAGE
+========================================== */
+
+#result {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+    min-height: 24px;
+}
+
+
+/* ==========================================
+   HISTORY
+========================================== */
+
+.history-entry {
+    background: #f8fafc;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    border-left: 4px solid #111827;
+}
+
+.history-entry strong {
+    margin-bottom: 7px;
+}
+
+.history-entry span {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.history-entry p {
+    margin-top: 8px;
+    line-height: 1.5;
+    color: #374151;
+}
+
+.history-entry small {
+    display: block;
+    margin-top: 8px;
+    color: #94a3b8;
+}
+
+
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+
+@media (max-width: 900px) {
+
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 15px;
+    }
+
+    header {
+        padding: 24px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    section {
+        padding: 20px;
+    }
+
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-box {
+        flex-direction: column;
+    }
+
+    .search-box button {
+        width: 100%;
+    }
+
+    .decision p strong {
+        display: block;
+        margin-bottom: 8px;
+    }
+}

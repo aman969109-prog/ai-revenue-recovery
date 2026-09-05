@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AI Revenue Recovery</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header>
+
+        <h1>
+            🤖 AI Revenue Recovery
+        </h1>
+
+        <p>
+            Intelligent payment recovery system
+        </p>
+
+    </header>
+
+
+    <!-- =====================================================
+         SELECT PAYMENT
+    ====================================================== -->
+
+    <section>
+
+        <h2>
+            🔎 Select Payment
+        </h2>
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="payment-input"
+                value="PAY002"
+                placeholder="Enter Payment ID e.g. PAY001"
+            >
+
+            <button
+                type="button"
+                id="investigate-button"
+            >
+                🔍 Investigate
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         REVENUE RECOVERY OVERVIEW
+    ====================================================== -->
+
+    <section class="metrics-section">
+
+        <h2>
+            📊 Revenue Recovery Overview
+        </h2>
+
+
+        <div class="metrics-grid">
+
+
+            <!-- Revenue At Risk -->
+
+            <div class="metric-card">
+
+                <div class="metric-title">
+                    💰 Revenue at Risk
+                </div>
+
+                <div
+                    class="metric-value"
+                    id="total-at-risk"
+                >
+                    Loading...
+                </div>
+
+            </div>
+
+
+            <!-- Recovered Revenue -->
+
+            <div class="metric-card">
+
+                <div class="metric-title">
+                    ✅ Recovered Revenue
+                </div>
+
+                <div
+                    class="metric-value"
+                    id="recovered-revenue"
+                >
+                    Loading...
+                </div>
+
+            </div>
+
+
+            <!-- Recovery Rate -->
+
+            <div class="metric-card">
+
+                <div class="metric-title">
+                    📈 Recovery Rate
+                </div>
+
+                <div
+                    class="metric-value"
+                    id="recovery-rate"
+                >
+                    Loading...
+                </div>
+
+            </div>
+
+
+            <!-- High Risk -->
+
+            <div class="metric-card">
+
+                <div class="metric-title">
+                    🚨 High Risk Payments
+                </div>
+
+                <div
+                    class="metric-value"
+                    id="high-risk-payments"
+                >
+                    Loading...
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PAYMENT INVESTIGATION
+    ====================================================== -->
+
+    <section>
+
+        <h2>
+            💳 Payment Investigation
+        </h2>
+
+
+        <div class="grid">
+
+
+            <div>
+
+                <span>
+                    Payment ID
+                </span>
+
+                <strong id="payment-id">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Customer ID
+                </span>
+
+                <strong id="customer-id">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Amount
+                </span>
+
+                <strong id="amount">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Status
+                </span>
+
+                <strong id="status">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Failure Reason
+                </span>
+
+                <strong id="failure-reason">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         RECOVERY ANALYSIS
+    ====================================================== -->
+
+    <section>
+
+        <h2>
+            🧠 AI Recovery Analysis
+        </h2>
+
+
+        <div class="grid">
+
+
+            <div>
+
+                <span>
+                    Customer Success Rate
+                </span>
+
+                <strong id="success-rate">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Recovery Probability
+                </span>
+
+                <strong id="recovery-probability">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Risk Level
+                </span>
+
+                <strong id="risk">
+                    Loading...
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         AI DECISION
+    ====================================================== -->
+
+    <section class="decision">
+
+        <h2>
+            🤖 AI Decision
+        </h2>
+
+
+        <p>
+
+            <strong>
+                Recommended Action
+            </strong>
+
+            <span id="action">
+                Loading...
+            </span>
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Confidence
+            </strong>
+
+            <span id="confidence">
+                Loading...
+            </span>
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Priority
+            </strong>
+
+            <span id="priority">
+                Loading...
+            </span>
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Reason
+            </strong>
+
+            <span id="reason">
+                Loading...
+            </span>
+
+        </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         RECOVERY MESSAGE
+    ====================================================== -->
+
+    <section>
+
+        <h2>
+            💬 Recovery Message
+        </h2>
+
+
+        <div id="message">
+
+            Loading...
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         RECOVERY ACTION
+    ====================================================== -->
+
+    <section class="recovery-action">
+
+        <h2>
+            ⚡ Recovery Action
+        </h2>
+
+
+        <button
+            id="run-button"
+            type="button"
+        >
+
+            🚀 Run Recovery
+
+        </button>
+        <button
+        id="approve-btn"
+        type="button"
+        style="display:none;"
+>
+         ✅ Approve Recovery
+        </button>
+
+
+        <div id="result">
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         RECOVERY ANALYTICS
+    ====================================================== -->
+
+    <section>
+
+        <h2>
+            📊 Recovery Analytics
+        </h2>
+
+
+        <div class="metrics-grid">
+
+
+            <!-- Total Payments -->
+
+            <div class="metric-card">
+
+                <div class="metric-title">
+                    💳 Total Payments
+                </div>
+
+                <div
+                    class="metric-value"
+                    id="analytics-total-payments"
+                >
+                    Loading...
+                </div>
+
+            </div>
+
+
+            <!-- Recovered -->
+
+            <div class="metric-card">
+
+                <div class="metric-title">
+                    ✅ Recovered Payments
+                </div>
+
+                <div
+                    class="metric-value"
+                    id="analytics-recovered-payments"
+                >
+                    Loading...
+                </div>
+
+            </div>
+
+
+            <!-- Pending -->
+
+            <div class="metric-card">
+
+                <div class="metric-title">
+                    ⏳ Pending Payments
+                </div>
+
+                <div
+                    class="metric-value"
+                    id="analytics-pending-payments"
+                >
+                    Loading...
+                </div>
+
+            </div>
+
+
+            <!-- Escalated -->
+
+            <div class="metric-card">
+
+                <div class="metric-title">
+                    🚨 Escalated Payments
+                </div>
+
+                <div
+                    class="metric-value"
+                    id="analytics-escalated-payments"
+                >
+                    Loading...
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             ACTION STATISTICS
+        ================================================== -->
+
+        <h3>
+            📈 Action Statistics
+        </h3>
+
+
+        <div id="action-statistics">
+
+            <p>
+                Loading action statistics...
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =====================================================
+         RECOVERY HISTORY
+    ====================================================== -->
+
+    <section>
+
+        <h2>
+            📜 Recovery History
+        </h2>
+
+
+        <div id="history">
+
+            <p>
+                Loading recovery history...
+            </p>
+
+        </div>
+
+    </section>
+
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================== -->
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
