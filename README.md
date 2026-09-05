@@ -2,7 +2,7 @@
 
 ### Razorpay AI Buildathon 2026 — Track 03: AI Revenue Recovery
 
-An AI-driven revenue recovery system that detects failed or at-risk payments, evaluates recovery probability, selects an appropriate recovery action, applies human approval for high-risk actions, and maintains a complete recovery history.
+An AI-driven revenue recovery system that detects failed or at-risk payments, evaluates recovery probability, uses an LLM to recommend an appropriate recovery action, applies human approval for high-risk actions, and maintains a complete recovery history.
 
 ---
 
@@ -28,7 +28,7 @@ Treating every failed payment the same can lead to unnecessary retries, poor cus
 1. Detects revenue at risk
 2. Investigates the payment and customer history
 3. Calculates a recovery score
-4. Determines the next best recovery action
+4. Uses an LLM to determine the next best recovery action
 5. Applies human approval for high-risk actions
 6. Executes the recovery workflow
 7. Records every action in the recovery history
@@ -48,9 +48,11 @@ View payment amount, status, customer ID, and failure reason.
 
 The system evaluates customer payment history and payment information to estimate recovery probability and risk level.
 
-### 🤖 AI-Style Decision Layer
+### 🤖 LLM Decision Layer
 
-A structured decision layer selects actions such as:
+The system uses an LLM to analyze payment information, customer history, recovery probability, and risk level to recommend the next recovery action.
+
+Actions include:
 
 * Retry payment
 * Send payment reminder
@@ -58,7 +60,7 @@ A structured decision layer selects actions such as:
 * Escalate to finance
 * Stop recovery
 
-> The current build uses a deterministic/mock AI decision layer for the demo. The architecture is designed so an LLM can replace this decision function later without changing the recovery workflow.
+The LLM provides the recommended action, confidence, priority, and reasoning. The recommendation is then checked by the application's safety and recovery rules before execution.
 
 ### 🛡️ Human Approval
 
@@ -98,42 +100,46 @@ The frontend displays recovery metrics and action statistics in one dashboard.
 
 ```text
 ┌─────────────────────────────┐
-│        Web Dashboard        │
-│      HTML / CSS / JS        │
+│       Web Dashboard         │
+│       HTML / CSS / JS       │
 └──────────────┬──────────────┘
                │
                ▼
 ┌─────────────────────────────┐
 │         Flask API           │
-│     Payment & Recovery      │
-│          Endpoints          │
+│   Payment & Recovery APIs   │
 └──────────────┬──────────────┘
                │
                ▼
-┌─────────────────────────────┐
-│    Revenue Recovery Agent   │
-│                             │
-│  Payment Investigation      │
-│          ↓                  │
-│  Customer History           │
-│          ↓                  │
-│  Recovery Scoring           │
-│          ↓                  │
-│  Action Decision            │
-│          ↓                  │
-│  Approval / Safety Checks   │
-│          ↓                  │
-│  Recovery Execution         │
-│          ↓                  │
-│  Audit & Recovery History  │
-└──────────────┬──────────────┘
-               │
-               ▼
-┌─────────────────────────────┐
-│          SQLite DB          │
-│ Payments / Customers /      │
-│ Recovery History / Audits   │
-└─────────────────────────────┘
+┌─────────────────────────────────────┐
+│      Revenue Recovery Agent         │
+│                                     │
+│  Payment Investigation              │
+│            ↓                        │
+│  Customer History Analysis          │
+│            ↓                        │
+│  Recovery Score                     │
+│            ↓                        │
+│  LLM Decision Layer                 │
+│            ↓                        │
+│  Safety / Policy Checks             │
+│            ↓                        │
+│  Human Approval if Required         │
+│            ↓                        │
+│  Recovery Execution                 │
+│            ↓                        │
+│  Audit & Recovery History           │
+└──────────────────┬──────────────────┘
+                   │
+          ┌────────┴─────────┐
+          ▼                  ▼
+┌──────────────────┐  ┌──────────────────┐
+│   LLM Provider   │  │    SQLite DB     │
+│   OpenAI API     │  │ Payments         │
+│                  │  │ Customers        │
+│ Decision /       │  │ Recovery History │
+│ Reasoning        │  │ Audit Events     │
+└──────────────────┘  └──────────────────┘
 ```
 
 ---
@@ -142,28 +148,48 @@ The frontend displays recovery metrics and action statistics in one dashboard.
 
 ```text
 Payment Failure
+
       ↓
+
 Detect Revenue at Risk
+
       ↓
+
 Investigate Payment
+
       ↓
+
 Analyze Customer History
+
       ↓
+
 Calculate Recovery Score
+
       ↓
-Determine Recovery Action
+
+LLM Determines Recovery Action
+
       ↓
+
 Is Human Approval Required?
+
       ├── Yes → Pending Finance Approval
       │
       └── No
            ↓
+
       Execute Recovery
+
            ↓
+
       Record Result
+
            ↓
+
       Update Recovery History
+
            ↓
+
       Update Analytics
 ```
 
@@ -174,11 +200,12 @@ Is Human Approval Required?
 * **Python**
 * **Flask**
 * **SQLite**
+* **OpenAI LLM**
 * **HTML**
 * **CSS**
 * **JavaScript**
 * REST APIs
-* Rule-based / simulated AI decision layer
+* LLM-based decision layer
 
 ---
 
@@ -309,6 +336,7 @@ Financial recovery actions should not be executed without appropriate controls.
 This project includes:
 
 * Risk-based decision making
+* LLM-assisted recovery decisions
 * Human approval for high-risk actions
 * Action validation
 * Duplicate-action protection
@@ -316,6 +344,8 @@ This project includes:
 * Recovery stopping conditions
 * Recovery history
 * Audit events
+
+The LLM recommends recovery actions, while application-level safety and recovery rules control execution.
 
 The project uses simulated payment data and does not require real customer payment credentials.
 
@@ -325,6 +355,7 @@ The project uses simulated payment data and does not require real customer payme
 
 ```text
 ai-revenue-recovery/
+
 │
 ├── app.py
 ├── revenue_agent.py
@@ -346,7 +377,6 @@ ai-revenue-recovery/
 
 The current version is a working prototype. Future versions could add:
 
-* Real LLM-based payment failure reasoning
 * Razorpay test-mode API integration
 * Real payment failure webhooks
 * Production database
@@ -371,7 +401,7 @@ The demo covers:
 
 1. Payment investigation
 2. Recovery scoring
-3. AI decision
+3. LLM-based recovery decision
 4. Recovery execution
 5. Human approval / escalation
 6. Recovery history
@@ -395,10 +425,3 @@ The goal is to demonstrate how an intelligent, bounded recovery agent can move f
 GitHub:
 
 https://github.com/aman969109-prog/ai-revenue-recovery
-
-```
-
-This positioning is important: Track 03 is explicitly about detecting revenue at risk, choosing an intervention, and executing a bounded recovery workflow, so your README now directly maps your implementation to that requirement.
-
-
-
