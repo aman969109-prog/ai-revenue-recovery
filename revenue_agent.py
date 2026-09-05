@@ -1,6 +1,16 @@
 import sqlite3
+import os
+import json
 from datetime import datetime
 
+from openai import OpenAI
+# ============================================================
+# OPENAI LLM
+# ============================================================
+
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY")
+)
 
 # ============================================================
 # CONFIGURATION
@@ -591,6 +601,122 @@ def generate_recovery_message(
         f"successfully recovered."
      )
     return "No customer communication is required."
+# ============================================================
+# REAL LLM DECISION LAYER
+# ============================================================
+
+def llm_ai_decision(payment_id, payment, customer, score):
+    """
+    Uses OpenAI to recommend a recovery action.
+    The LLM only recommends an action.
+    Existing safety checks and execution functions remain in control.
+    """
+
+    allowed_actions = {
+        "retry_payment",
+        "send_payment_reminder",
+        "send_payment_method_update",
+        "escalate",
+        "stop"
+    }
+
+    try:
+        response = client.responses.create(
+            model="gpt-5.6-luna",
+            input=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are an AI revenue recovery decision engine. "
+                        "Analyze the failed payment, customer history, and recovery score. "
+                        "Recommend exactly one safe recovery action. "
+                        "You do not execute payments or contact customers. "
+                        "Choose only from the allowed actions."
+                    )
+                },
+                {
+                    "role": "user",
+                    "content": json.dumps({
+                        "payment_id": payment_id,
+                        "payment": payment,
+                        "customer": customer,
+                        "recovery_score": score,
+                        "allowed_actions": list(allowed_actions)
+                    })
+                }
+            ],
+            text={
+                "format": {
+                    "type": "json_schema",
+                    "name": "recovery_decision",
+                    "strict": True,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "action": {
+                                "type": "string",
+                                "enum": [
+                                    "retry_payment",
+                                    "send_payment_reminder",
+                                    "send_payment_method_update",
+                                    "escalate",
+                                    "stop"
+                                ]
+                            },
+                            "confidence": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                            },
+                            "priority": {
+                                "type": "string",
+                                "enum": [
+                                    "low",
+                                    "medium",
+                                    "high"
+                                ]
+                            },
+                            "reason": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "action",
+                            "confidence",
+                            "priority",
+                            "reason"
+                        ],
+                        "additionalProperties": False
+                    }
+                }
+            }
+        )
+
+        decision = json.loads(response.output_text)
+
+        # Safety validation
+        if decision["action"] not in allowed_actions:
+            raise ValueError("LLM returned an invalid recovery action")
+
+        decision["confidence"] = max(
+            0.0,
+            min(1.0, float(decision["confidence"]))
+        )
+
+        if decision["priority"] not in {"low", "medium", "high"}:
+            raise ValueError("LLM returned an invalid priority")
+
+        return decision
+
+    except Exception as e:
+        print(f"⚠️ LLM decision failed, using fallback: {e}")
+
+        return mock_ai_decision(
+            payment_id,
+            payment,
+            customer,
+            score
+        )
 
 
 # ============================================================
@@ -1239,7 +1365,7 @@ def automatic_recovery_loop(payment_id):
         # AI DECISION
         # ----------------------------------------------------
 
-        decision = mock_ai_decision(
+        decision = llm_ai_decision(
             payment_id,
             payment,
             customer,

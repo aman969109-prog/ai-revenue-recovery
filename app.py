@@ -5,6 +5,7 @@ from revenue_agent import (
     get_customer_history,
     calculate_recovery_score,
     mock_ai_decision,
+    llm_ai_decision,
     retry_payment,
     send_payment_reminder,
     send_payment_method_update,
@@ -137,7 +138,7 @@ def payment_details(payment_id):
         # AI DECISION FOR FAILED PAYMENT
         # ====================================================
 
-        decision = mock_ai_decision(
+        decision = llm_ai_decision(
             payment_id,
             payment,
             customer,
