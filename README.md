@@ -363,6 +363,10 @@ The current version is a working prototype. Future versions could add:
 
 The project is demonstrated through the working web dashboard and API endpoints.
 
+### Dashboard
+
+![AI Revenue Recovery Dashboard](./dashboard-overview.png)
+
 The demo covers:
 
 1. Payment investigation
@@ -396,15 +400,5 @@ https://github.com/aman969109-prog/ai-revenue-recovery
 
 This positioning is important: Track 03 is explicitly about detecting revenue at risk, choosing an intervention, and executing a bounded recovery workflow, so your README now directly maps your implementation to that requirement.
 
-### Now save it
 
-In Notepad:
 
-**Ctrl + A → Ctrl + V → Ctrl + S**
-
-Then close Notepad.
-
-After that, **don't commit yet**.
-
-Just tell me **“saved”**, and I'll give you the next single step: checking the README and Git status before we push the final version.
-```
